@@ -1,8 +1,7 @@
 DESCRIPTION = "Rockchip-Radxa binary loader"
 
-LICENSE = "BINARY"
+LICENSE = "Rockchip-Binary-EULA"
 LIC_FILES_CHKSUM = "file://LICENSE.TXT;md5=564e729dd65db6f65f911ce0cd340cf9"
-NO_GENERIC_LICENSE[BINARY] = "LICENSE.TXT"
 
 DEPENDS = "radxa-binary-native"
 
