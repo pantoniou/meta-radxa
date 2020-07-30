@@ -12,5 +12,3 @@ REQUIRED_DISTRO_FEATURES = "pam systemd"
 CORE_IMAGE_BASE_INSTALL += " \
     kernel-modules \
 "
-
-EXTRA_USERS_PARAMS = "usermod -P rock root;"
