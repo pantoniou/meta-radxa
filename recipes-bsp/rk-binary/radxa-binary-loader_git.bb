@@ -31,6 +31,7 @@ DDR_BIN = "ddr.bin"
 LOADER_BIN = "loader.bin"
 MINILOADER_BIN = "miniloader.bin"
 ATF_BIN = "atf.bin"
+BL31_ELF = "bl31.elf"
 UBOOT_IMG = "uboot.img"
 
 RKBINARY_DEPLOY_DIR = "${DEPLOYDIR}/radxa-binary"
@@ -41,7 +42,7 @@ do_deploy () {
 	[ ${MINILOADER} ] && cp ${S}/${MINILOADER} ${RKBINARY_DEPLOY_DIR}/${MINILOADER_BIN}	
 	[ ${LOADER} ] && cp ${S}/${LOADER} ${RKBINARY_DEPLOY_DIR}/${LOADER_BIN}
 	[ ${ATF} ] && cp ${S}/${ATF} ${RKBINARY_DEPLOY_DIR}/${ATF_BIN}
-	[ ${BL31} ] && cp ${S}/${BL31} ${RKBINARY_DEPLOY_DIR}/${BL31_BIN}
+	[ ${BL31} ] && cp ${S}/${BL31} ${RKBINARY_DEPLOY_DIR}/${BL31_ELF}
 }
 
 addtask deploy before do_build after do_compile
