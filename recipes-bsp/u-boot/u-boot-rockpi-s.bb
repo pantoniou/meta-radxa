@@ -18,7 +18,7 @@ SRCREV = "6de46245e680db858d74437dfd655dbf9600e48d"
 S = "${WORKDIR}/git"
 
 # u-boot will build native python module
-inherit pythonnative
+inherit python3native
 
 do_configure () {
     if [ -z "${UBOOT_CONFIG}" ]; then
