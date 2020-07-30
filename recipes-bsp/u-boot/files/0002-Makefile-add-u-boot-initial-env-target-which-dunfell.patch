@@ -1,0 +1,35 @@
+From 9ed098bcadf9e81b0f4ef00ddca01ae60d6e4256 Mon Sep 17 00:00:00 2001
+From: Pantelis Antoniou <pantelis.antoniou@konsulko.com>
+Date: Thu, 30 Jul 2020 15:49:19 +0300
+Subject: [PATCH 2/2] Makefile: add u-boot-initial-env target which dunfell
+ requires
+
+dunfell requires a u-boot-initial-env target, so add it.
+Potentially it does nothing but it's OK.
+
+Signed-off-by: Pantelis Antoniou <pantelis.antoniou@konsulko.com>
+---
+ Makefile | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/Makefile b/Makefile
+index 94ace1a7a2..370a3b53c9 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1675,6 +1675,13 @@ endif
+ 	$(build)=$(build-dir) $(@:.ko=.o)
+ 	$(Q)$(MAKE) -f $(srctree)/scripts/Makefile.modpost
+ 
++quiet_cmd_genenv = GENENV $@
++cmd_genenv = $(OBJCOPY) --dump-section .rodata.default_environment=$@ env/common.o; \
++	sed --in-place -e 's/\x00/\x0A/g' $@
++
++u-boot-initial-env: u-boot.bin
++	$(call if_changed,genenv)
++
+ # FIXME Should go into a make.lib or something
+ # ===========================================================================
+ 
+-- 
+2.17.1
+
