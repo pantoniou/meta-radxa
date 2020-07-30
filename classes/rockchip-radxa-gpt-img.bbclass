@@ -22,7 +22,8 @@ TRUST_IMG = "trust.img"
 # Not from radxa-binary
 UBOOT_IMG = "u-boot.img"
 
-GPTIMG_APPEND_rk3308 = "console=tty1 console=ttyFIQ0,1500000n8 rw \
+GPTIMG_APPEND_rk3308 = "earlycon=uart8250,mmio32,0xff0a0000 swiotlb=1 coherent_pool=1m earlyprintk \
+	console=ttyS0,1500000n8 rw \
 	root=PARTUUID=b921b045-1d rootfstype=ext4 init=/sbin/init rootwait"
 GPTIMG_APPEND_rk3328 = "console=tty1 console=ttyS2,1500000n8 rw \
 	root=PARTUUID=b921b045-1d rootfstype=ext4 init=/sbin/init rootwait"
