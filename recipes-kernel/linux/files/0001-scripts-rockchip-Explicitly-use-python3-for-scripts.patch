@@ -1,0 +1,50 @@
+From 52144adcfed90a1c8133afa3bcbe9a347cc4d02e Mon Sep 17 00:00:00 2001
+From: Pantelis Antoniou <pantelis.antoniou@konsulko.com>
+Date: Fri, 31 Jul 2020 09:17:02 +0000
+Subject: [PATCH] scripts-rockchip: Explicitly use python3 for scripts
+
+The rockchip scripts use env python which makes dunfell
+error out since python3 migration is a thing.
+
+Switch everything to python3 to make it happy.
+
+Signed-off-by: Pantelis Antoniou <pantelis.antoniou@konsulko.com>
+---
+ scripts/gcc-wrapper.py | 2 +-
+ scripts/mkbootimg      | 2 +-
+ scripts/mkmultidtb.py  | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/scripts/gcc-wrapper.py b/scripts/gcc-wrapper.py
+index 3a4b766924c4..8370ac005201 100755
+--- a/scripts/gcc-wrapper.py
++++ b/scripts/gcc-wrapper.py
+@@ -1,4 +1,4 @@
+-#! /usr/bin/env python
++#! /usr/bin/env python3
+ # -*- coding: utf-8 -*-
+ 
+ # Copyright (c) 2011-2012, The Linux Foundation. All rights reserved.
+diff --git a/scripts/mkbootimg b/scripts/mkbootimg
+index fda9af0d28fb..3debcbf307f0 100755
+--- a/scripts/mkbootimg
++++ b/scripts/mkbootimg
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ # Copyright 2015, The Android Open Source Project
+ #
+ # Licensed under the Apache License, Version 2.0 (the "License");
+diff --git a/scripts/mkmultidtb.py b/scripts/mkmultidtb.py
+index 81b814acd304..7fe1dc24cb75 100755
+--- a/scripts/mkmultidtb.py
++++ b/scripts/mkmultidtb.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ # SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+ # Copyright (c) 2018 Fuzhou Rockchip Electronics Co., Ltd
+ #
+-- 
+2.17.1
+

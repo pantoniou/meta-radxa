@@ -6,6 +6,7 @@ DEPENDS += "openssl-native"
 
 SRC_URI = " \
 	git://github.com/radxa/kernel.git;branch=release-4.4-rockpi4; \
+	file://0001-scripts-rockchip-Explicitly-use-python3-for-scripts.patch \
 "
 
 SRCREV = "d2ab1f26e1b33970a6ccda18633a681a7730665e"

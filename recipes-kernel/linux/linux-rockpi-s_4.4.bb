@@ -9,6 +9,7 @@ do_compile[depends] += "u-boot-mkimage-radxa-native:do_populate_sysroot"
 
 SRC_URI = " \
 	git://github.com/radxa/kernel.git;branch=stable-4.4-rockpis; \
+	file://0001-scripts-rockchip-Explicitly-use-python3-for-scripts.patch \
 "
 
 SRCREV = "daf243b9655a73ee14568e36cf76ac8a094e68e6"
