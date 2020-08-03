@@ -5,13 +5,13 @@
 bootloader --ptable gpt
 
 # stage 1 loader (at 32k offset)
-part /loader1 --source rawcopy --sourceparams="file=idbloader.img" --ondisk mmcblk --align=32
+part /loader1 --source rawcopy --sourceparams="file=radxa-binaries/idbloader.img" --ondisk mmcblk --align=32
 
 # stage 2 loader (uboot) (at 8M offset)
-part /loader2 --source rawcopy --sourceparams="file=u-boot.img" --fixed-size=4M --ondisk mmcblk --align=8192
+part /loader2 --source rawcopy --sourceparams="file=radxa-binaries/u-boot.img" --fixed-size=4M --ondisk mmcblk --align=8192
 
 # atf (at 12M offset)
-part /trust --source rawcopy --sourceparams="file=trust.img" --fixed-size=4M --ondisk mmcblk --align=12288
+part /trust --source rawcopy --sourceparams="file=radxa-binaries/trust.img" --fixed-size=4M --ondisk mmcblk --align=12288
 
 # boot
 part /boot --source bootimg-partition --fixed-size=112M --ondisk mmcblk --fstype=vfat --label boot --active --align=16384 --uuid="C12A7328-F81F-11D2-BA4B-00A0C93EC93B" --part-type="C12A7328-F81F-11D2-BA4B-00A0C93EC93B"
