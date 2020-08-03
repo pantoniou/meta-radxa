@@ -1,0 +1,21 @@
+# short-description: Create RockPI-4b SD card image
+# long-description: Creates a partitioned SD card image for use with
+# RockPI-4b. Boot files are located in the first vfat partition.
+
+bootloader --ptable gpt
+
+# stage 1 loader (at 32k offset)
+part /loader1 --source rawcopy --sourceparams="file=idbloader.img" --ondisk mmcblk --align=32
+
+# stage 2 loader (uboot) (at 8M offset)
+part /loader2 --source rawcopy --sourceparams="file=u-boot.img" --fixed-size=4M --ondisk mmcblk --align=8192
+
+# atf (at 12M offset)
+part /trust --source rawcopy --sourceparams="file=trust.img" --fixed-size=4M --ondisk mmcblk --align=12288
+
+# boot
+part /boot --source bootimg-partition --fixed-size=112M --ondisk mmcblk --fstype=vfat --label boot --active --align=16384 --uuid="C12A7328-F81F-11D2-BA4B-00A0C93EC93B" --part-type="C12A7328-F81F-11D2-BA4B-00A0C93EC93B"
+
+# root at 128MB
+part / --source rootfs --ondisk mmcblk --fstype=vfat --fstype=ext4 --label rootfs --align 131072 --uuid="B921B045-1DF0-41C3-AF44-4C6F280D3FAE" --part-type="B921B045-1DF0-41C3-AF44-4C6F280D3FAE"
+
