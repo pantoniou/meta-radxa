@@ -26,8 +26,6 @@ UBOOT_OFFSET_rk3328 ?= "0x200000"
 UBOOT_OFFSET_rk3399 ?= "0x200000"
 
 do_deploy () {
-	bbnote "radxa-binary-generator: deploy WORKDIR=${WORKDIR} DEPLOY_DIR_IMAGE=${DEPLOY_DIR_IMAGE}"
-
 	bbnote "radxa-binary-generator: generating ${IDBLOADER}"
 	${DEPLOY_DIR_IMAGE}/mkimage -n ${SOC_FAMILY} -T rksd -d ${DEPLOY_DIR_IMAGE}/${DDR_BIN} ${DEPLOY_DIR_IMAGE}/${IDBLOADER}
 	cat ${DEPLOY_DIR_IMAGE}/${MINILOADER_BIN} >>${DEPLOY_DIR_IMAGE}/${IDBLOADER}
