@@ -22,10 +22,6 @@ do_compile_append () {
 	fi
 }
 
-do_deploy_append() {
-    cp -a ${B}/tools/mkimage ${DEPLOY_DIR_IMAGE}
-}
-
 do_compile_prepend () {
 	export STAGING_INCDIR=${STAGING_INCDIR_NATIVE};
 	export STAGING_LIBDIR=${STAGING_LIBDIR_NATIVE};
@@ -43,14 +39,14 @@ do_compile_append () {
 }
 
 do_deploy_append() {
-	cp -a ${B}/tools/mkimage ${DEPLOY_DIR_IMAGE}
+
 	if [ -f "${WORKDIR}/${MACHINE}/uEnv.txt" ]; then
-		install -D -m 644 ${WORKDIR}/${MACHINE}/uEnv.txt ${DEPLOYDIR}/
+		install -D -m 0644 ${WORKDIR}/${MACHINE}/uEnv.txt ${DEPLOYDIR}
 	fi
 	if [ -f "${WORKDIR}/boot.scr" ]; then
-		install -D -m 644 ${WORKDIR}/boot.scr ${DEPLOYDIR}/
+		install -D -m 0644 ${WORKDIR}/boot.scr ${DEPLOYDIR}
 	fi
 	if [ -f "${WORKDIR}/boot.cmd" ]; then
-		install -D -m 644 ${WORKDIR}/boot.cmd ${DEPLOYDIR}/
+		install -D -m 0644 ${WORKDIR}/boot.cmd ${DEPLOYDIR}
 	fi
 }

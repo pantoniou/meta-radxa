@@ -3,7 +3,9 @@ DESCRIPTION = "Rockchip-Radxa binary loader"
 LICENSE = "Rockchip-Binary-EULA"
 LIC_FILES_CHKSUM = "file://LICENSE.TXT;md5=564e729dd65db6f65f911ce0cd340cf9"
 
-DEPENDS = "radxa-binary-native"
+inherit deploy nopackages
+
+INHIBIT_DEFAULT_DEPENDS = "1"
 
 SRC_URI = "git://github.com/radxa/rkbin.git;branch=master;"
 SRCREV = "fed51695bb1f60088ebddf32b3bd428d50e4d405"
@@ -25,32 +27,30 @@ DDR_rk3399 ?= "bin/rk33/rk3399_ddr_800MHz_v1.20.bin"
 BL31_rk3308 ?= "bin/rk33/rk3308_bl31_v2.10.elf"
 BL31_rk3328 ?= "bin/rk33/rk322xh_bl31_v1.42.elf"
 BL31_rk3399 ?= "bin/rk33/rk3399_bl31_v1.26.elf"
-inherit deploy
 
 DDR_BIN = "ddr.bin"
 LOADER_BIN = "loader.bin"
 MINILOADER_BIN = "miniloader.bin"
 ATF_BIN = "atf.bin"
 BL31_ELF = "bl31.elf"
-UBOOT_IMG = "uboot.img"
-
-RKBINARY_DEPLOY_DIR = "${DEPLOYDIR}/radxa-binary"
 
 do_deploy () {
-	install -d ${RKBINARY_DEPLOY_DIR}
-	[ ${DDR} ] && cp ${S}/${DDR} ${RKBINARY_DEPLOY_DIR}/${DDR_BIN}
-	[ ${MINILOADER} ] && cp ${S}/${MINILOADER} ${RKBINARY_DEPLOY_DIR}/${MINILOADER_BIN}	
-	[ ${LOADER} ] && cp ${S}/${LOADER} ${RKBINARY_DEPLOY_DIR}/${LOADER_BIN}
-	[ ${ATF} ] && cp ${S}/${ATF} ${RKBINARY_DEPLOY_DIR}/${ATF_BIN}
-	[ ${BL31} ] && cp ${S}/${BL31} ${RKBINARY_DEPLOY_DIR}/${BL31_ELF}
+	install -d ${DEPLOYDIR}/${PN}
+
+	[ ${DDR} ]        && cp ${S}/${DDR}        ${DEPLOYDIR}/${PN}/${DDR_BIN}
+	[ ${MINILOADER} ] && cp ${S}/${MINILOADER} ${DEPLOYDIR}/${PN}/${MINILOADER_BIN}	
+	[ ${LOADER} ]     && cp ${S}/${LOADER}     ${DEPLOYDIR}/${PN}/${LOADER_BIN}
+	[ ${ATF} ]        && cp ${S}/${ATF}        ${DEPLOYDIR}/${PN}/${ATF_BIN}
+	[ ${BL31} ]       && cp ${S}/${BL31}       ${DEPLOYDIR}/${PN}/${BL31_ELF}
+
+	touch ${DEPLOYDIR}/${PN}/${PN}-${PV}.stamp
 }
 
-addtask deploy before do_build after do_compile
+do_radxa_binary_loader[depends] += "radxa-binary-native:do_deploy"
 
-do_package[noexec] = "1"
-do_packagedata[noexec] = "1"
-do_package_write[noexec] = "1"
-do_package_write_ipk[noexec] = "1"
-do_package_write_rpm[noexec] = "1"
-do_package_write_deb[noexec] = "1"
-do_package_write_tar[noexec] = "1"
+addtask deploy before do_build after do_install
+do_deploy[dirs] += "${DEPLOYDIR}/${PN}"
+
+# COMPATIBLE_MACHINE = "(rock-pi-4b-rk3399|rock-pi-e-rk3328|rock-pi-s-rk3308)$"
+
+PACKAGE_ARCH = "${MACHINE_ARCH}"
