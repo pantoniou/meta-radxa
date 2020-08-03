@@ -11,17 +11,10 @@ IMAGE_TYPEDEP_rockchip-radxa-gpt-img = "${IMG_ROOTFS_TYPE}"
 
 GPTIMG = "${IMAGE_BASENAME}-${MACHINE}-gpt.img"
 BOOT_IMG = "${IMAGE_BASENAME}-${MACHINE}-boot.img"
-IDBLOADER = "idbloader.img"
 
-# Get From radxa-binary loader
-DDR_BIN = "radxa-binary/ddr.bin"
-LOADER_BIN = "radxa-binary/loader.bin"
-MINILOADER_BIN = "radxa-binary/miniloader.bin"
-ATF_BIN = "radxa-binary/atf.bin"
-BL31_ELF = "radxa-binary/bl31.elf"
-TRUST_IMG = "trust.img"
-# Not from radxa-binary
-UBOOT_IMG = "u-boot.img"
+IDBLOADER = "${DEPLOY_DIR_IMAGE}/radxa-binaries/idbloader.img"
+UBOOT_IMG = "${DEPLOY_DIR_IMAGE}/radxa-binaries/u-boot.img"
+TRUST_IMG = "${DEPLOY_DIR_IMAGE}/radxa-binaries/trust.img"
 
 GPTIMG_APPEND_rk3308 = "earlycon=uart8250,mmio32,0xff0a0000 swiotlb=1 coherent_pool=1m earlyprintk \
 	console=ttyS0,1500000n8 rw \
@@ -68,9 +61,9 @@ IMAGE_CMD_rockchip-radxa-gpt-img () {
 	BOOT_START=$(expr ${ATF_START} + ${ATF_SIZE})
 	ROOTFS_START=$(expr ${BOOT_START} + ${BOOT_SIZE})
 
-	dd if=${DEPLOY_DIR_IMAGE}/${IDBLOADER} of=${GPTIMG} conv=notrunc,fsync seek=${LOADER1_START}
-	dd if=${DEPLOY_DIR_IMAGE}/${UBOOT_IMG} of=${GPTIMG} conv=notrunc,fsync seek=${LOADER2_START}
-	dd if=${DEPLOY_DIR_IMAGE}/${TRUST_IMG} of=${GPTIMG} conv=notrunc,fsync seek=${ATF_START}
+	dd if=${IDBLOADER} of=${GPTIMG} conv=notrunc,fsync seek=${LOADER1_START}
+	dd if=${UBOOT_IMG} of=${GPTIMG} conv=notrunc,fsync seek=${LOADER2_START}
+	dd if=${TRUST_IMG} of=${GPTIMG} conv=notrunc,fsync seek=${ATF_START}
 
 	cd ${DEPLOY_DIR_IMAGE}
 	if [ -f ${WORKDIR}/${BOOT_IMG} ]; then
